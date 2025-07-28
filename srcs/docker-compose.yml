@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # nginx:
+  #   build: ./requirements/nginx/
+  #   ports:
+  #     - "443:443"
+  #   volumes:
+  #     - /home/rafiq/data
+    # restart: always
+  mariadb:
+    # service: mariadb
+    build: ./requirements/mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/rafiq/data
+    restart: always
+  # wordpress:
+  #   build: ./requirements/wordpress/
+  #   ports:
+  #     - 9000:9000
+  #   volumes:
+  #     - /home/rafiq/data
+
+
