@@ -1,26 +1,38 @@
 version: '3.8'
 
 services:
-  # nginx:
-  #   build: ./requirements/nginx/
-  #   ports:
-  #     - "443:443"
-  #   volumes:
-  #     - /home/rafiq/data
-    # restart: always
   mariadb:
-    # service: mariadb
+    image: mariadb
+    container_name: mariadb
     build: ./requirements/mariadb
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       - /home/rafiq/data
-    restart: always
-  # wordpress:
-  #   build: ./requirements/wordpress/
-  #   ports:
-  #     - 9000:9000
-  #   volumes:
-  #     - /home/rafiq/data
-
-
+    env_file:
+      - .env
+  nginx:
+    image: nginx
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      - 443:443
+    env_file:
+      - .env
+    networks:
+      - my-network
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    build: ./requirements/wordpress
+    ports:
+      - 9000:9000
+    volumes:
+      - /home/rafiq/data
+    env_file:
+      - .env
+    networks:
+      - my-network
+networks:
+  my-network:
+    name: my-network

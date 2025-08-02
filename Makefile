@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rafiq <rmarzouk@student.1337.com>          +#+  +:+       +#+         #
+#    By: rmarzouk <rmarzouk@student.1337.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/17 12:08:42 by rafiq             #+#    #+#              #
-#    Updated: 2025/05/09 19:41:09 by rafiq            ###   ########.fr        #
+#    Updated: 2025/08/01 11:54:02 by rmarzouk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,17 +18,19 @@ END_COLOUR=\033[0m
 
 all:
 	@echo "$(COLOUR_BLUE)Building ...$(END_COLOUR)\n"
-	@sudo docker-compose -f srcs/docker-compose.yml up
+	docker-compose -f srcs/docker-compose.yml up --build -d
 	@echo "\n$(COLOUR_GREEN)Service is running now !!$(END_COLOUR)"
 
 clean:
-	sudo docker-compose -f srcs/docker-compose.yml down
+	docker-compose -f srcs/docker-compose.yml down
 
 fclean:clean
-	sudo docker rmi -f srcs_nginx:latest
-	sudo docker rmi -f srcs-srcs_nginx:latest
+	docker rmi -f srcs_nginx:latest
+	docker rmi -f srcs-srcs_nginx:latest
 
 re:fclean all
 
 i:
-	sudo docker images
+	docker images
+down:
+	docker compose -f srcs/docker-compose.yml down 

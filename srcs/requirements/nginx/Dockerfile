@@ -1,14 +1,8 @@
-FROM alpine
+FROM debian:12
 
-# I should know why --no-cach flag an 
-
-RUN apk update && apk add --no-cache nginx
- 
-# copy config file of nginx from my host to image
+RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-
-# expose port 443 for documentation
 
 EXPOSE 443
 # run nginx 
