@@ -5,8 +5,8 @@ services:
     image: mariadb
     container_name: mariadb
     build: ./requirements/mariadb
-    # volumes:
-    #   - ~/data/mariadb:/var/lib/mysql
+    volumes:
+      - ~/data/mariadb:/var/lib/mysql
     env_file:
       - .env
     networks:
