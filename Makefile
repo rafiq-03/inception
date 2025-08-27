@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmarzouk <rmarzouk@student.1337.com>       +#+  +:+       +#+         #
+#    By: rafiq <rmarzouk@student.1337.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/17 12:08:42 by rafiq             #+#    #+#              #
-#    Updated: 2025/08/01 11:54:02 by rmarzouk         ###   ########.fr        #
+#    Updated: 2025/08/27 11:34:14 by rafiq            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,6 @@ clean:
 	docker-compose -f srcs/docker-compose.yml down
 
 fclean:clean
-	docker rmi -f srcs_nginx:latest
-	docker rmi -f srcs-srcs_nginx:latest
 
 re:fclean all
 
