@@ -1,4 +1,5 @@
 sleep 10
+
 cd /var/www/html/
 
 if [ ! -f /var/www/html/wp-config.php ]; then
@@ -26,7 +27,6 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	--url=${DOMAIN_NAME} \
 	--role=author\
 	--user_pass=${WP_USER_PASSWORD}
-	echo "user created"
 
 	echo "install redis"
 	wp plugin install redis-cache --activate --allow-root
@@ -34,6 +34,5 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     wp config set WP_REDIS_PORT 6379 --type=constant --raw --allow-root
 	wp redis enable --allow-root
 fi
-	echo "mama salit"
 
 exec php-fpm8.2 -F
