@@ -6,22 +6,18 @@ services:
     container_name: mariadb
     build: ./requirements/mariadb
     volumes:
-      - ~/data/mariadb:/var/lib/mysql
+      - mariadb-volume:/var/lib/mysql
     env_file:
       - .env
     networks:
       - my-network
-    # healthcheck:
-    #   test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
-    #   interval: 5s
-    #   timeout: 5s
-    #   retries: 10
+    restart: always
   nginx:
     image: nginx
     container_name: nginx
     build: ./requirements/nginx
     volumes:
-      - ~/data/wp:/var/www/html
+      - wp-volume:/var/www/html
     ports:
       - 443:443
     env_file:
@@ -30,42 +26,41 @@ services:
       - my-network
     depends_on:
       - wordpress
+    restart: always
   wordpress:
     image: wordpress
     container_name: wordpress
     build: ./requirements/wordpress
     volumes:
-      - ~/data/wp:/var/www/html
+      - wp-volume:/var/www/html
     env_file:
       - .env
-    ports:
-      - 9000:9000
     networks:
       - my-network
     depends_on:
       - mariadb
-      # mariadb:
-      #   condition: service_healthy
+    restart: always
   adminer:
     image: adminer
     container_name: adminer
     build: ./requirements/bonus/adminer
     volumes:
-      - ~/data/mariadb:/var/lib/mysql
+      - mariadb-volume:/var/lib/mysql
     env_file:
       - .env
     ports:
-      - 8080:8080
+      - 9090:9090
     networks:
       - my-network
     depends_on:
       - mariadb
+    restart: always
   redis:
     image: redis
     container_name: redis
     build: ./requirements/bonus/redis
     volumes:
-      - ~/data/wp:/var/www/html
+      - wp-volume:/var/www/html
     env_file:
       - .env
     networks:
@@ -77,7 +72,7 @@ services:
     container_name: ftp
     build: ./requirements/bonus/ftp
     volumes:
-      - ~/data/wp:/var/ftp
+      - wp-volume:/var/www/html
     env_file:
       - .env
     ports:
@@ -87,9 +82,48 @@ services:
       - my-network
     depends_on:
       - wordpress
-
+    restart: always
+  cadvisor:
+    container_name: cadvisor
+    build: ./requirements/bonus/cadvisor
+    image: cadvisor
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: always
+  static:
+    container_name: static
+    build: ./requirements/bonus/static
+    image: static
+    ports:
+      - "80:80"
+    networks:
+      - my-network
+    restart: always
 
 networks:
   my-network:
     name: my-network
     driver: bridge
+
+volumes:
+  wp-volume:
+    name: wp-volume
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/rafiq/data/wp 
+  mariadb-volume:
+    name: mariadb-volume
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/rafiq/data/mariadb

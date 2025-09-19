@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inception Project - README</title>
+  <link rel="stylesheet" href="styles.css">	
+</head>
+<body>
+  <main>
+    <section>
+      <h2>Project Overview</h2>
+      <p>
+        <b>Inception</b> is a system administration project focused on mastering <b>Docker</b> by building a small infrastructure from scratch. 
+        The goal is to virtualize multiple services using Docker Compose inside a virtual machine, ensuring best practices in containerization and deployment.
+      </p>
+    </section>
+
+    <section>
+      <h2>Mandatory Requirements</h2>
+      <ul>
+        <li>Each service runs in its <b>own container</b>.</li>
+        <li>Containers must be built from <b>Alpine</b> or <b>Debian</b>.</li>
+        <li>No pre-built images allowed (except Alpine/Debian).</li>
+      </ul>
+      <h3>Services:</h3>
+      <ul>
+        <li><b>NGINX</b>: TLSv1.2 or TLSv1.3 only, entry point via port <code>443</code>.</li>
+        <li><b>WordPress</b>: with php-fpm (no NGINX inside).</li>
+        <li><b>MariaDB</b>: database only (no NGINX inside).</li>
+      </ul>
+      <h3>Infrastructure Rules:</h3>
+      <ul>
+        <li>Volumes for WordPress database + website files.</li>
+        <li>Custom Docker network connecting services.</li>
+        <li>Containers auto-restart on crash.</li>
+        <li>Domain: <code>&lt;login&gt;.42.fr</code> mapped to VM IP.</li>
+        <li>Secure credentials with <code>.env</code> </li>
+        <li>At least 2 DB users, including an admin (username cannot contain <i>admin</i>).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Project Structure</h2>
+      <pre class="tree">
+Makefile
+srcs/
+ ├─ docker-compose.yml
+ ├─ .env
+ └─ requirements/
+     ├─ nginx/
+     ├─ wordpress/
+     ├─ mariadb/
+     └─ bonus/
+      </pre>
+    </section>
+
+    <section>
+      <h2>Bonus Part</h2>
+      <ul>
+        <li>Redis cache for WordPress.</li>
+        <li>FTP server linked to WordPress volume.</li>
+        <li>Static website (Inception project Overview).</li>
+        <li>Adminer for DB management.</li>
+        <li>cadvisor for monitoring.</li>
+      </ul>
+    </section>
+
+  </main>
+</body>
+</html>
