@@ -67,6 +67,7 @@ services:
       - my-network
     depends_on:
       - wordpress
+    restart: always
   ftp:
     image: ftp
     container_name: ftp

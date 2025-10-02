@@ -5,10 +5,9 @@ RUN apt-get update && \
 	apt-get upgrade -y && \
 	apt-get install nginx -y
 
-WORKDIR /var/www/html	
+WORKDIR /var/www/html
 
-COPY src/index.html index.html
-COPY src/styles.css styles.css
+COPY src/index.html src/styles.css ./
 
 EXPOSE 80
 

@@ -1,5 +1,3 @@
-sleep 10
-
 cd /var/www/html/
 
 if [ ! -f /var/www/html/wp-config.php ]; then
@@ -30,8 +28,8 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 
 	echo "install redis"
 	wp plugin install redis-cache --activate --allow-root
-	wp config set WP_REDIS_HOST 'redis' --type=constant --allow-root
-    wp config set WP_REDIS_PORT 6379 --type=constant --raw --allow-root
+	wp config set WP_REDIS_HOST 'redis' --allow-root
+    wp config set WP_REDIS_PORT 6379 --allow-root
 	wp redis enable --allow-root
 fi
 
