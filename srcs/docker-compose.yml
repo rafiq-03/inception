@@ -120,11 +120,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/rafiq/data/wp 
+      device: /home/rmarzouk/data/wp 
   mariadb-volume:
     name: mariadb-volume
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/rafiq/data/mariadb
+      device: /home/rmarzouk/data/mariadb
